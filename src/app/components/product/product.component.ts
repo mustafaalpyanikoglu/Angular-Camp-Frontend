@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ProductComponent implements OnInit { //çalışan ilk kod
 
   constructor(private productService:ProductService,
     private activatedRoute:ActivatedRoute,
-    private toastrSerivce:ToastrService) { }
+    private toastrSerivce:ToastrService,
+    private cartSerivce:CartService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>
@@ -53,7 +55,15 @@ export class ProductComponent implements OnInit { //çalışan ilk kod
 
   addToCart(product:Product)
   {
-    this.toastrSerivce.success("Sepete eklendi.",product.productName)
+    if(product.productId == 1)
+    {
+      this.toastrSerivce.error("Hata","Bu ürün sepete eklenemez.")
+    }
+    else
+    {
+      this.toastrSerivce.success("Sepete eklendi.",product.productName)
+      this.cartSerivce.addToCart(product);
+    }
   }
 
 }
