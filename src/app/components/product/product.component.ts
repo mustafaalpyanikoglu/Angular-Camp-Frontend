@@ -13,6 +13,7 @@ export class ProductComponent implements OnInit { //çalışan ilk kod
 
   products:Product[] = [];
   dataLoaded = false;
+  filterText = "";
 
   constructor(private productService:ProductService,
     private activatedRoute:ActivatedRoute) { }
